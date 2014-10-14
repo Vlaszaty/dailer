@@ -1,5 +1,6 @@
 import logging
 import time
+import datetime
 import re
 from multiprocessing import Process, JoinableQueue as Queue
 from Queue import Empty
@@ -7,6 +8,7 @@ import subprocess
 import os.path
 import sys
 import signal
+
 
 from flask import Flask
 
@@ -208,7 +210,7 @@ class Printer(Loggable, Process):
 
 class Controller(Loggable, Process):
 
-    def __init__(self, arguments, q_in, q_out):
+    def __init__(self, arguments, q_in, q_out, q_status):
         super(Controller, self).__init__()
 
         print "controller initializing"
@@ -308,13 +310,15 @@ class Controller(Loggable, Process):
 
 
 
+
+
 def main():
 
     usage = "usage: %prog [options]"
     parser = OptionParser(usage)
     parser.add_option("-s", "--span", type="int", dest="span", help="span")
     parser.add_option("-i", "--in", type="string", dest="infile", help="infile; read a single E.164 numbers per line")
-    parser.add_option("-o", "--out", type="string", dest="outfile", help="outfile; csv [E.164],[status]")   
+    parser.add_option("-o", "--out", type="string", dest="outfile", help="outfile; csv [E.164],[status]", default="outfile" + datetime.datetime.now().isoformat())   
 
     # range
     #parser.add_option("-p", "--head", type="string", dest="head", help="head; first n digits")
@@ -344,7 +348,7 @@ def main():
 
     @app.route("/")
     def hello():
-        out = q_status.get()
+        out = str(q_in.get())
 
         print out
         return out
