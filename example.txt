@@ -1,3 +1,0 @@
-# Run dailer on 2 spans from the non-existant numbers for testing.
-
-python dailer.py -s 2 -v -i numbers_noexist -o outfile0
