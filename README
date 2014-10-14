@@ -1,0 +1,18 @@
+# Run dailer on 2 spans from the non-existant numbers for testing.
+
+python dailer.py -s 2 -v -i numbers_noexist -o outfile0
+
+
+
+
+#TODO 
+
++ Show status on page
+	- Messages to web queue
+	- function returns web queue
+	- page requests contents of web queue
+	- ajax call to web queue
+
++ Add start/stop controls on page
+
+
